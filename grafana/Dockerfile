@@ -1,4 +1,4 @@
-FROM balenalib/%%BALENA_MACHINE_NAME%%:buster
+FROM balenalib/raspberry-pi:buster
 
 COPY ./grafana.ini /usr/share/grafana/conf/custom.ini
 COPY ./provisioning /usr/src/app/provisioning
@@ -13,8 +13,10 @@ RUN install_packages \
       jq \
       wget
 
-RUN /usr/src/app/download.sh "%%BALENA_ARCH%%"
+RUN /usr/src/app/download.sh "rpi"
 
 RUN dpkg -i /tmp/grafana.deb && rm /tmp/grafana.deb
+
+RUN grafana-cli --pluginsDir "/usr/share/grafana/data/plugins" plugins install grafana-influxdb-flux-datasource
 
 CMD ["/bin/sh","/usr/src/app/entry.sh"]

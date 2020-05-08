@@ -1,11 +1,11 @@
-FROM balenalib/%%BALENA_MACHINE_NAME%%:buster
+FROM balenalib/raspberry-pi:buster
 
 COPY ./*.sh /usr/src/app/
 RUN chmod +x /usr/src/app/*.sh
 
 RUN install_packages wget
 
-RUN /usr/src/app/download.sh "%%BALENA_ARCH%%"
+RUN /usr/src/app/download.sh "rpi"
 
 RUN dpkg -i /tmp/telegraf.deb && rm /tmp/telegraf.deb
 COPY telegraf.conf /etc/telegraf/telegraf.conf
