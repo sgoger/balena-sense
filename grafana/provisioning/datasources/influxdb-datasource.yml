@@ -14,12 +14,12 @@ datasources:
   # <int> org id. will default to orgId 1 if not specified
   orgId: 1
   # <string> url
-  url: #url
+  url: https://#url
   withCredentials: true
   jsonData:
     bucket: "#bucket"
     organization: "#organization"
-    url: "#url"
+    url: "https://#url"
   secureJsonData:
     token: "#token"
   version: 1

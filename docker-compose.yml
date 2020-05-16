@@ -2,6 +2,8 @@ version: '2'
 services:
   grafana:
     restart: unless-stopped
+    depends_on:
+      - telegraf
     build: ./grafana
     ports:
       - "8080:80"
@@ -21,6 +23,8 @@ services:
   telegraf:
     build: ./telegraf
     restart: unless-stopped
+    depends_on:
+      - mqtt
     cap_add:
       - SYS_ADMIN
     environment:
@@ -34,3 +38,5 @@ services:
     ports:
       - "1883"
     restart: unless-stopped
+    depends_on:
+      - sensor

@@ -1,5 +1,15 @@
 .PHONY: help up down restart logs clean
 
+# If the first argument is one of the supported commands...
+SUPPORTED_COMMANDS := dc
+SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
+ifneq "$(SUPPORTS_MAKE_ARGS)" ""
+  # use the rest as arguments for the command
+  COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  # ...and turn them into do-nothing targets
+  $(eval $(COMMAND_ARGS):;@:)
+endif
+
 DC = docker-compose -p raspair
 
 help: ## Display available commands
@@ -26,4 +36,9 @@ logs: ## Show log trail
 
 clean: ## Clean leftovers
 	@echo "Cleaning leftovers"
-	@${DC} prune -f
+	@docker system prune -f
+
+dc: ## Shortcut for docker-compose commands
+	@echo "Running \"$(DC) $(COMMAND_ARGS)\""
+	@${DC} $(COMMAND_ARGS)
+

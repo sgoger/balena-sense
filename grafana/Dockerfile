@@ -19,4 +19,4 @@ RUN dpkg -i /tmp/grafana.deb && rm /tmp/grafana.deb
 
 RUN grafana-cli --pluginsDir "/usr/share/grafana/data/plugins" plugins install grafana-influxdb-flux-datasource
 
-CMD ["/bin/sh","/usr/src/app/entry.sh"]
+CMD ["/bin/bash","/usr/src/app/entry.sh"]

@@ -19,22 +19,20 @@
   "links": [],
   "panels": [
     {
-      "cacheTimeout": null,
+      "datasource": null,
       "gridPos": {
-        "h": 8,
-        "w": 9,
+        "h": 7,
+        "w": 7,
         "x": 0,
         "y": 0
       },
-      "id": 10,
-      "links": [],
+      "id": 2,
       "options": {
         "fieldOptions": {
           "calcs": [
-            "last"
+            "mean"
           ],
           "defaults": {
-            "decimals": null,
             "mappings": [
               {
                 "from": "0",
@@ -52,7 +50,7 @@
                 "text": "Moderate",
                 "to": "100.5",
                 "type": 2,
-                "value": "51"
+                "value": ""
               },
               {
                 "from": "100.5",
@@ -65,7 +63,7 @@
               },
               {
                 "from": "150.5",
-                "id": 5,
+                "id": 4,
                 "operator": "",
                 "text": "Unhealthy",
                 "to": "200.5",
@@ -74,7 +72,7 @@
               },
               {
                 "from": "200.5",
-                "id": 6,
+                "id": 5,
                 "operator": "",
                 "text": "Very unhealthy",
                 "to": "300.5",
@@ -83,71 +81,60 @@
               },
               {
                 "from": "300.5",
-                "id": 7,
+                "id": 6,
                 "operator": "",
                 "text": "Hazardous",
                 "to": "500.5",
                 "type": 2,
-                "value": "300.5"
+                "value": ""
               }
             ],
-            "max": "500",
+            "max": 500,
             "min": 0,
-            "thresholds": [
-              {
-                "color": "#00e400",
-                "value": null
-              },
-              {
-                "color": "#ffff00",
-                "value": 51
-              },
-              {
-                "color": "#ff7e00",
-                "value": 101
-              },
-              {
-                "color": "rgb(255, 0, 0)",
-                "value": 151
-              },
-              {
-                "color": "rgb(143, 63, 151)",
-                "value": 201
-              },
-              {
-                "color": "#7e0023",
-                "value": 301
-              }
-            ],
-            "unit": "none"
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "#00e400",
+                  "value": null
+                },
+                {
+                  "color": "#ffff00",
+                  "value": 51
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 101
+                },
+                {
+                  "color": "rgb(255, 0, 0)",
+                  "value": 151
+                },
+                {
+                  "color": "rgb(143, 63, 151)",
+                  "value": 201
+                },
+                {
+                  "color": "#7e0023",
+                  "value": 301
+                }
+              ]
+            },
+            "title": ""
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.3.6",
+      "pluginVersion": "6.7.3",
       "targets": [
         {
-          "groupBy": [],
-          "measurement": "balena-sense",
-          "orderByTime": "ASC",
-          "policy": "default",
+          "query": "from(bucket: \"#bucket\")\n  |> range($range)\n  |> filter(fn: (r) => r[\"_field\"] == \"air_quality_score\")\n  |> filter(fn: (r) => r[\"host\"] == \"raspair\")",
           "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "air_quality_score"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": []
+          "resultFormat": "time_series"
         }
       ],
       "timeFrom": null,
@@ -160,17 +147,18 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 9,
+        "h": 7,
+        "w": 16,
+        "x": 7,
         "y": 0
       },
-      "id": 12,
+      "hiddenSeries": false,
+      "id": 20,
       "legend": {
-        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
@@ -181,12 +169,10 @@
       },
       "lines": true,
       "linewidth": 1,
-      "links": [],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
-      "paceLength": 10,
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -197,42 +183,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "groupBy": [],
-          "measurement": "balena-sense",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "air_quality_score"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": []
+          "query": "from(bucket: \"#bucket\")\n  |> range($range)\n  |> filter(fn: (r) => r[\"_field\"] == \"air_quality_score\")\n  |> filter(fn: (r) => r[\"host\"] == \"raspair\")",
+          "refId": "A"
         }
       ],
       "thresholds": [
         {
-          "colorMode": "ok",
-          "fill": true,
-          "line": true,
-          "op": "lt",
-          "value": 50,
-          "yaxis": "left"
-        },
-        {
           "colorMode": "custom",
           "fill": false,
-          "fillColor": "rgba(250, 222, 42, 0)",
+          "fillColor": "rgba(50, 116, 217, 0.2)",
           "line": true,
-          "lineColor": "#E0B400",
+          "lineColor": "#00e400",
           "op": "lt",
-          "value": 100,
+          "value": 51,
           "yaxis": "left"
         },
         {
@@ -240,9 +203,9 @@
           "fill": false,
           "fillColor": "rgba(50, 116, 217, 0.2)",
           "line": true,
-          "lineColor": "#FF9830",
+          "lineColor": "#ffff00",
           "op": "lt",
-          "value": 150,
+          "value": 101,
           "yaxis": "left"
         },
         {
@@ -250,9 +213,9 @@
           "fill": false,
           "fillColor": "rgba(50, 116, 217, 0.2)",
           "line": true,
-          "lineColor": "#C4162A",
+          "lineColor": "#eab839",
           "op": "lt",
-          "value": 200,
+          "value": 151,
           "yaxis": "left"
         },
         {
@@ -260,16 +223,36 @@
           "fill": false,
           "fillColor": "rgba(50, 116, 217, 0.2)",
           "line": true,
-          "lineColor": "rgb(89, 0, 73)",
+          "lineColor": "rgb(255, 0, 0)",
           "op": "lt",
-          "value": 300,
+          "value": 201,
+          "yaxis": "left"
+        },
+        {
+          "colorMode": "custom",
+          "fill": false,
+          "fillColor": "rgba(50, 116, 217, 0.2)",
+          "line": true,
+          "lineColor": "rgb(143, 63, 151)",
+          "op": "lt",
+          "value": 301,
+          "yaxis": "left"
+        },
+        {
+          "colorMode": "custom",
+          "fill": false,
+          "fillColor": "rgba(50, 116, 217, 0.2)",
+          "line": true,
+          "lineColor": "#7e0023",
+          "op": "gt",
+          "value": 301,
           "yaxis": "left"
         }
       ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Indoor Air Quality (IAQ) rating",
+      "title": "Indoor Air Quality (IAQ) classification",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -285,8 +268,9 @@
       },
       "yaxes": [
         {
+          "decimals": null,
           "format": "short",
-          "label": null,
+          "label": "IAQ",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -298,7 +282,7 @@
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": true
+          "show": false
         }
       ],
       "yaxis": {
@@ -308,124 +292,90 @@
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 7
       },
-      "id": 17,
+      "id": 8,
       "panels": [],
       "title": "Detail",
       "type": "row"
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#FFCB7D",
-        "#56A64B",
-        "#C0D8FF"
-      ],
-      "format": "humidity",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
+      "datasource": null,
       "gridPos": {
-        "h": 5,
+        "h": 7,
         "w": 7,
         "x": 0,
-        "y": 9
+        "y": 8
       },
-      "id": 4,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
+      "id": 6,
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "defaults": {
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "#ffcb7d",
+                  "value": null
+                },
+                {
+                  "color": "#56a64b",
+                  "value": 30
+                },
+                {
+                  "color": "#c0d8ff",
+                  "value": 50
+                }
+              ]
+            },
+            "unit": "humidity"
+          },
+          "overrides": [],
+          "values": false
         },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": true,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
-      "tableColumn": "",
+      "pluginVersion": "6.7.3",
       "targets": [
         {
-          "groupBy": [],
-          "measurement": "balena-sense",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "humidity"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": []
+          "query": "from(bucket: \"#bucket\")\n  |> range($range)\n  |> filter(fn: (r) => r[\"_field\"] == \"humidity\")\n  |> filter(fn: (r) => r[\"host\"] == \"raspair\")",
+          "refId": "A"
         }
       ],
-      "thresholds": "30,50",
+      "timeFrom": null,
+      "timeShift": null,
       "title": "Humidity",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "gauge"
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 5,
-        "w": 14,
+        "h": 7,
+        "w": 16,
         "x": 7,
-        "y": 9
+        "y": 8
       },
-      "id": 14,
+      "hiddenSeries": false,
+      "id": 10,
       "legend": {
         "avg": false,
         "current": false,
@@ -437,12 +387,10 @@
       },
       "lines": true,
       "linewidth": 1,
-      "links": [],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
-      "paceLength": 10,
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -453,23 +401,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "groupBy": [],
-          "measurement": "balena-sense",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "humidity"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": []
+          "query": "from(bucket: \"#bucket\")\n  |> range($range)\n  |> filter(fn: (r) => r[\"_field\"] == \"humidity\")\n  |> filter(fn: (r) => r[\"host\"] == \"raspair\")",
+          "refId": "A"
         }
       ],
       "thresholds": [
@@ -509,8 +442,8 @@
       },
       "yaxes": [
         {
-          "format": "short",
-          "label": "%",
+          "format": "humidity",
+          "label": "Humidity",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -522,7 +455,7 @@
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": false
+          "show": true
         }
       ],
       "yaxis": {
@@ -531,112 +464,78 @@
       }
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "format": "celsius",
-      "gauge": {
-        "maxValue": 50,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
+      "datasource": null,
       "gridPos": {
-        "h": 5,
+        "h": 7,
         "w": 7,
         "x": 0,
-        "y": 14
+        "y": 15
       },
-      "id": 2,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
+      "id": 12,
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "defaults": {
+            "mappings": [],
+            "max": 50,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "#299c46",
+                  "value": null
+                },
+                {
+                  "color": "rgba(237, 129, 40, 0.89)",
+                  "value": 25
+                },
+                {
+                  "color": "#d44a3a",
+                  "value": 35
+                }
+              ]
+            },
+            "unit": "celsius"
+          },
+          "overrides": [],
+          "values": false
         },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
-      "tableColumn": "",
+      "pluginVersion": "6.7.3",
       "targets": [
         {
-          "groupBy": [],
-          "measurement": "balena-sense",
-          "orderByTime": "ASC",
-          "policy": "default",
+          "query": "from(bucket: \"#bucket\")\n  |> range($range)\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"host\"] == \"raspair\")",
           "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "temperature"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": []
+          "resultFormat": "time_series"
         }
       ],
-      "thresholds": "25,35",
+      "timeFrom": null,
+      "timeShift": null,
       "title": "Temperature",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "gauge"
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 5,
-        "w": 14,
+        "h": 7,
+        "w": 16,
         "x": 7,
-        "y": 14
+        "y": 15
       },
-      "id": 8,
+      "hiddenSeries": false,
+      "id": 14,
       "legend": {
         "avg": false,
         "current": false,
@@ -648,14 +547,12 @@
       },
       "lines": true,
       "linewidth": 1,
-      "links": [],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
-      "paceLength": 10,
       "percentage": false,
-      "pointradius": 5,
+      "pointradius": 2,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
@@ -664,23 +561,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "groupBy": [],
-          "measurement": "balena-sense",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "temperature"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": []
+          "query": "from(bucket: \"#bucket\")\n  |> range($range)\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\")\n  |> filter(fn: (r) => r[\"host\"] == \"raspair\")",
+          "refId": "A"
         }
       ],
       "thresholds": [
@@ -720,7 +602,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "celsius",
           "label": "Temperature",
           "logBase": 1,
           "max": null,
@@ -729,11 +611,11 @@
         },
         {
           "format": "short",
-          "label": "",
+          "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": false
+          "show": true
         }
       ],
       "yaxis": {
@@ -742,19 +624,18 @@
       }
     },
     {
-      "cacheTimeout": null,
+      "datasource": null,
       "gridPos": {
-        "h": 5,
+        "h": 7,
         "w": 7,
         "x": 0,
-        "y": 19
+        "y": 22
       },
-      "id": 6,
-      "links": [],
+      "id": 16,
       "options": {
         "fieldOptions": {
           "calcs": [
-            "last"
+            "mean"
           ],
           "defaults": {
             "mappings": [
@@ -792,7 +673,7 @@
                 "text": "Fair",
                 "to": "1040",
                 "type": 2,
-                "value": "1026"
+                "value": ""
               },
               {
                 "from": "1040",
@@ -804,61 +685,51 @@
                 "value": ""
               }
             ],
-            "max": 870,
-            "min": 1160,
-            "thresholds": [
-              {
-                "color": "#C4162A",
-                "value": null
-              },
-              {
-                "color": "#1F60C4",
-                "value": 990
-              },
-              {
-                "color": "#FFF899",
-                "value": 1006
-              },
-              {
-                "color": "#37872D",
-                "value": 1025
-              },
-              {
-                "color": "#FFB357",
-                "value": 1040
-              }
-            ],
+            "max": 1160,
+            "min": 870,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "#c4162a",
+                  "value": null
+                },
+                {
+                  "color": "#1f60c4",
+                  "value": 990
+                },
+                {
+                  "color": "#fff899",
+                  "value": 1006
+                },
+                {
+                  "color": "#37872d",
+                  "value": 1025
+                },
+                {
+                  "color": "#ffb357",
+                  "value": 1040
+                }
+              ]
+            },
             "unit": "pressurembar"
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.3.6",
+      "pluginVersion": "6.7.3",
       "targets": [
         {
-          "groupBy": [],
-          "measurement": "balena-sense",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "pressure"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": []
+          "query": "from(bucket: \"#bucket\")\n  |> range($range)\n  |> filter(fn: (r) => r[\"_field\"] == \"pressure\")\n  |> filter(fn: (r) => r[\"host\"] == \"raspair\")",
+          "refId": "A"
         }
       ],
+      "timeFrom": null,
+      "timeShift": null,
       "title": "Pressure",
       "type": "gauge"
     },
@@ -867,36 +738,34 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 5,
-        "w": 14,
+        "h": 7,
+        "w": 16,
         "x": 7,
-        "y": 19
+        "y": 22
       },
-      "id": 15,
+      "hiddenSeries": false,
+      "id": 18,
       "legend": {
-        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "rightSide": false,
         "show": false,
         "total": false,
         "values": false
       },
       "lines": true,
       "linewidth": 1,
-      "links": [],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
-      "paceLength": 10,
       "percentage": false,
-      "pointradius": 5,
+      "pointradius": 2,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
@@ -905,23 +774,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "groupBy": [],
-          "measurement": "balena-sense",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "pressure"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": []
+          "query": "from(bucket: \"#bucket\")\n  |> range($range)\n  |> filter(fn: (r) => r[\"_field\"] == \"pressure\")\n  |> filter(fn: (r) => r[\"host\"] == \"raspair\")",
+          "refId": "A"
         }
       ],
       "thresholds": [],
@@ -945,8 +799,8 @@
       "yaxes": [
         {
           "decimals": 2,
-          "format": "none",
-          "label": "mbar",
+          "format": "pressurembar",
+          "label": "mBar",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -954,7 +808,7 @@
         },
         {
           "format": "short",
-          "label": "",
+          "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
@@ -965,10 +819,71 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": null,
+      "gridPos": {
+        "h": 7,
+        "w": 5,
+        "x": 0,
+        "y": 29
+      },
+      "id": 22,
+      "links": [],
+      "options": {
+        "colorMode": "value",
+        "fieldOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "defaults": {
+            "mappings": [
+              {
+                "id": 0,
+                "op": "=",
+                "text": "N/A",
+                "type": 1,
+                "value": "null"
+              }
+            ],
+            "nullValueMode": "connected",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "green",
+                  "value": 1.9
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": [],
+          "values": false
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto"
+      },
+      "pluginVersion": "6.7.3",
+      "targets": [
+        {
+          "query": "from(bucket: \"#bucket\")\n  |> range($range)\n  |> filter(fn: (r) => r[\"_field\"] == \"air_quality_score_accuracy\")\n  |> filter(fn: (r) => r[\"host\"] == \"raspair\")",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Indoor Air Quality (IAQ) rating",
+      "type": "stat"
     }
   ],
-  "refresh": "10s",
-  "schemaVersion": 19,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -990,21 +905,14 @@
       "1h",
       "2h",
       "1d"
-    ],
-    "time_options": [
-      "5m",
-      "15m",
-      "1h",
-      "6h",
-      "12h",
-      "24h",
-      "2d",
-      "7d",
-      "30d"
     ]
   },
   "timezone": "",
-  "title": "balenaSense",
-  "uid": "pF3gRDiRk",
+  "title": "Raspair",
+  "uid": "6b0xNpZgz",
+  "variables": {
+    "list": []
+  },
   "version": 1
 }
+
