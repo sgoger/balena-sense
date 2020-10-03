@@ -20,6 +20,10 @@ services:
     build: ./sensor
     privileged: true
     restart: unless-stopped
+    environment:
+      - BALENASENSE_TEMP_OFFSET
+      - BALENASENSE_HUM_OFFSET
+      - BALENASENSE_ALTITUDE
   telegraf:
     build: ./telegraf
     restart: unless-stopped
